@@ -14,6 +14,6 @@ public record CreateAccountRequest(@NotBlank String name,
                                    @NotNull CustomerType customerType,
                                    @NotBlank String phoneNumber,
                                    @NotBlank String address,
-                                   @NotEmpty String postalCode) {
+                                   @NotBlank String postalCode) {
 }
 

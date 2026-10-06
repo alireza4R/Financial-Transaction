@@ -14,6 +14,7 @@ import java.time.LocalTime;
 @Getter
 @Entity
 @NoArgsConstructor
+@Builder
 public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -29,8 +30,9 @@ public class AccountEntity {
     private String phoneNumber;
     private String address;
     private String postalCode;
-    private LocalTime lastUpdate;
+    private LocalDate lastUpdate;
 
+    @Builder.Default
     @Column(nullable = false)
     private Long balance = 0L;
 
@@ -41,9 +43,10 @@ public class AccountEntity {
     @Column(nullable = false)
     private CustomerType customerType;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private AccountStatus accountStatus;
+    private AccountStatus accountStatus = AccountStatus.ACTIVE;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
