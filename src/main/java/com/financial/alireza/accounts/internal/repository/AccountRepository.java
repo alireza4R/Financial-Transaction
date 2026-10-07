@@ -13,6 +13,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
     public Optional<AccountEntity> findByNationalId(String nationalId);
 
+    public Optional<AccountEntity> findByAccountNumber(String accountNumber);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select a from AccountEntity a where a.nationalId = :nationalId")
     Optional<AccountEntity> findForUpdateByNationalId(

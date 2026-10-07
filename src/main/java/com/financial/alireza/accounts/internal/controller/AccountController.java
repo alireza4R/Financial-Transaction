@@ -1,6 +1,7 @@
 package com.financial.alireza.accounts.internal.controller;
 
 import com.financial.alireza.accounts.internal.dto.AccountCreateResponse;
+import com.financial.alireza.accounts.internal.dto.AccountInformationResponse;
 import com.financial.alireza.accounts.internal.dto.CreateAccountRequest;
 import com.financial.alireza.accounts.internal.dto.UpdateAccountRequest;
 import com.financial.alireza.accounts.internal.service.AccountService;
@@ -35,5 +36,22 @@ public class AccountController {
         accountService.changeInformation(updateAccountRequest, nationalId, principal.getName());
     }
 
+    @GetMapping("/get/account_number/{nationalId}")
+    public String getAccountNumber(@PathVariable String nationalId){
+        return accountService.getAccountNumber(nationalId);
+
+    }
+
+    @GetMapping("/get/balance/{accountNumber}")
+    public Long getBalance(@PathVariable String accountNumber){
+        return accountService.getBalance(accountNumber);
+
+    }
+
+
+    @GetMapping("/get/information/{accountNumber}")
+    public AccountInformationResponse getAccountInformation(@PathVariable String accountNumber){
+        return accountService.getAccountInformation(accountNumber);
+    }
 
 }

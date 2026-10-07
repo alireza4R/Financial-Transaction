@@ -1,8 +1,10 @@
 package com.financial.alireza.accounts.internal.service;
 
+import com.financial.alireza.accounts.internal.dto.AccountInformationResponse;
 import com.financial.alireza.accounts.internal.dto.CreateAccountRequest;
 import com.financial.alireza.accounts.internal.dto.UpdateAccountRequest;
 import com.financial.alireza.accounts.internal.exception.AccountExistException;
+import com.financial.alireza.accounts.internal.exception.AccountNotFoundException;
 import com.financial.alireza.accounts.internal.model.AccountEntity;
 import com.financial.alireza.accounts.internal.model.AccountHistoryEntity;
 import com.financial.alireza.accounts.internal.model.AccountKind;
@@ -83,6 +85,38 @@ public class AccountService {
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException("Cannot read update request", e);
         }
+
+    }
+
+    public Long getBalance (String accountNumber){
+        AccountEntity accountEntity = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(()-> new AccountNotFoundException("no account with this account number exist"));
+        return accountEntity.getBalance();
+    }
+
+    public String getAccountNumber(String nationalId){
+        AccountEntity accountEntity = accountRepository.findByNationalId(nationalId)
+                .orElseThrow(()-> new AccountNotFoundException("no account with this national id exist"));
+        return accountEntity.getAccountNumber();
+    }
+
+    public AccountInformationResponse getAccountInformation(String accountNumber){
+        AccountEntity accountEntity = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(()-> new AccountNotFoundException("no account with this account number exist"));
+
+        AccountInformationResponse accountInformationResponse = AccountInformationResponse.builder()
+                .accountStatus(accountEntity.getAccountStatus())
+                .name(accountEntity.getName())
+                .lastUpdate(accountEntity.getLastUpdate())
+                .birth(accountEntity.getBirth())
+                .postalCode(accountEntity.getPostalCode())
+                .nationalId(accountEntity.getNationalId())
+                .phoneNumber(accountEntity.getPhoneNumber())
+                .customerType(accountEntity.getCustomerType())
+                .address(accountEntity.getAddress())
+                .build();
+
+        return accountInformationResponse;
 
     }
 
