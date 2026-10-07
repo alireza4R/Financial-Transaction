@@ -10,7 +10,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 
 public record UpdateAccountRequest( String name,
-                                    String nationalId,
+                                    String newNationalId,
                                     CustomerType customerType,
                                     String phoneNumber,
                                     String address,
