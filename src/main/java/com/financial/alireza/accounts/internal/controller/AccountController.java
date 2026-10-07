@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequiredArgsConstructor
 public class AccountController {
@@ -26,9 +28,12 @@ public class AccountController {
                 .body(new AccountCreateResponse(accountNumber));
     }
 
-    @PutMapping("/update/{nationalId}")
-    public void updateAccount(@Valid @RequestBody UpdateAccountRequest updateAccountRequest,
-                              @NotBlank @PathVariable String nationalId){
-
+    @PatchMapping("/update/{nationalId}")
+    public void updateAccount(@RequestBody UpdateAccountRequest updateAccountRequest,
+                              @NotBlank @PathVariable String nationalId,
+                              Principal principal){
+        accountService.changeInformation(updateAccountRequest, nationalId, principal.getName());
     }
+
+
 }

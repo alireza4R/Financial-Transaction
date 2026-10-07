@@ -9,12 +9,12 @@ import jakarta.validation.constraints.NotNull;
 import java.sql.Time;
 import java.time.LocalDate;
 
-public record UpdateAccountRequest(@NotBlank String name,
-                                   @NotBlank String nationalId,
-                                   @NotNull CustomerType customerType,
-                                   @NotBlank String phoneNumber,
-                                   @NotBlank String address,
-                                   @NotBlank String postalCode,
-                                   @NotNull LocalDate birth,
-                                   @NotNull AccountStatus accountStatus) {
+public record UpdateAccountRequest( String name,
+                                    String nationalId,
+                                    CustomerType customerType,
+                                    String phoneNumber,
+                                    String address,
+                                    String postalCode,
+                                    LocalDate birth,
+                                    AccountStatus accountStatus) {
 }
