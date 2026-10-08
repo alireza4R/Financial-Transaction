@@ -1,4 +1,4 @@
-package com.financial.alireza.accounts.internal.model;
+package com.financial.alireza.accounts.model;
 
 public enum CustomerType {
     INDIVUTUAL,

@@ -1,12 +1,9 @@
-package com.financial.alireza.accounts.internal.model;
+package com.financial.alireza.accounts.model;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.Instant;
-import java.time.LocalTime;
 
 @Table(name = "accounts")
 @AllArgsConstructor

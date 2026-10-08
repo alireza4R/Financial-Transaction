@@ -1,11 +1,9 @@
-package com.financial.alireza.accounts.internal.dto;
+package com.financial.alireza.accounts.dto;
 
-import com.financial.alireza.accounts.internal.model.CustomerType;
+import com.financial.alireza.accounts.model.CustomerType;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.sql.Time;
 import java.time.LocalDate;
 
 public record CreateAccountRequest(@NotBlank String name,

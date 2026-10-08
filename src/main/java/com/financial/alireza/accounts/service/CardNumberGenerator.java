@@ -1,4 +1,4 @@
-package com.financial.alireza.accounts.internal.service;
+package com.financial.alireza.accounts.service;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

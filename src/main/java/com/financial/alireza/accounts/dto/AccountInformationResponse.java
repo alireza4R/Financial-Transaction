@@ -1,10 +1,9 @@
-package com.financial.alireza.accounts.internal.dto;
+package com.financial.alireza.accounts.dto;
 
-import com.financial.alireza.accounts.internal.model.AccountStatus;
-import com.financial.alireza.accounts.internal.model.CustomerType;
+import com.financial.alireza.accounts.model.AccountStatus;
+import com.financial.alireza.accounts.model.CustomerType;
 import lombok.Builder;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Builder

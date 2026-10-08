@@ -1,14 +1,13 @@
-package com.financial.alireza.accounts.internal.controller;
+package com.financial.alireza.accounts.controller;
 
-import com.financial.alireza.accounts.internal.dto.AccountCreateResponse;
-import com.financial.alireza.accounts.internal.dto.AccountInformationResponse;
-import com.financial.alireza.accounts.internal.dto.CreateAccountRequest;
-import com.financial.alireza.accounts.internal.dto.UpdateAccountRequest;
-import com.financial.alireza.accounts.internal.service.AccountService;
+import com.financial.alireza.accounts.dto.AccountCreateResponse;
+import com.financial.alireza.accounts.dto.AccountInformationResponse;
+import com.financial.alireza.accounts.dto.CreateAccountRequest;
+import com.financial.alireza.accounts.dto.UpdateAccountRequest;
+import com.financial.alireza.accounts.service.AccountService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

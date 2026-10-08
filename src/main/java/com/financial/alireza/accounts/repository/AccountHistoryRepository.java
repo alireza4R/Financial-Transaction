@@ -1,6 +1,6 @@
-package com.financial.alireza.accounts.internal.repository;
+package com.financial.alireza.accounts.repository;
 
-import com.financial.alireza.accounts.internal.model.AccountHistoryEntity;
+import com.financial.alireza.accounts.model.AccountHistoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AccountHistoryRepository extends JpaRepository<AccountHistoryEntity,Long> {

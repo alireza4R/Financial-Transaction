@@ -1,4 +1,4 @@
-package com.financial.alireza.accounts.internal.dto;
+package com.financial.alireza.accounts.dto;
 
 public record AccountCreateResponse(String accountNumber) {
 }

@@ -1,4 +1,4 @@
-package com.financial.alireza.accounts.internal.model;
+package com.financial.alireza.accounts.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

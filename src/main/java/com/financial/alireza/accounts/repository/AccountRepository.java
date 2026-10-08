@@ -1,6 +1,6 @@
-package com.financial.alireza.accounts.internal.repository;
+package com.financial.alireza.accounts.repository;
 
-import com.financial.alireza.accounts.internal.model.AccountEntity;
+import com.financial.alireza.accounts.model.AccountEntity;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

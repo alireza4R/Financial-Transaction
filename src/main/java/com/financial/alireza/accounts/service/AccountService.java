@@ -1,15 +1,15 @@
-package com.financial.alireza.accounts.internal.service;
+package com.financial.alireza.accounts.service;
 
-import com.financial.alireza.accounts.internal.dto.AccountInformationResponse;
-import com.financial.alireza.accounts.internal.dto.CreateAccountRequest;
-import com.financial.alireza.accounts.internal.dto.UpdateAccountRequest;
-import com.financial.alireza.accounts.internal.exception.AccountExistException;
-import com.financial.alireza.accounts.internal.exception.AccountNotFoundException;
-import com.financial.alireza.accounts.internal.model.AccountEntity;
-import com.financial.alireza.accounts.internal.model.AccountHistoryEntity;
-import com.financial.alireza.accounts.internal.model.AccountKind;
-import com.financial.alireza.accounts.internal.repository.AccountHistoryRepository;
-import com.financial.alireza.accounts.internal.repository.AccountRepository;
+import com.financial.alireza.accounts.dto.AccountInformationResponse;
+import com.financial.alireza.accounts.dto.CreateAccountRequest;
+import com.financial.alireza.accounts.dto.UpdateAccountRequest;
+import com.financial.alireza.accounts.exception.AccountExistException;
+import com.financial.alireza.accounts.exception.AccountNotFoundException;
+import com.financial.alireza.accounts.model.AccountEntity;
+import com.financial.alireza.accounts.model.AccountHistoryEntity;
+import com.financial.alireza.accounts.model.AccountKind;
+import com.financial.alireza.accounts.repository.AccountHistoryRepository;
+import com.financial.alireza.accounts.repository.AccountRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.PropertyAccessorFactory;
@@ -20,7 +20,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
