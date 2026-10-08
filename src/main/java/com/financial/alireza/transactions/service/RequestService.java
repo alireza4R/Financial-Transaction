@@ -2,6 +2,8 @@ package com.financial.alireza.transactions.service;
 
 import com.financial.alireza.accounts.repository.AccountRepository;
 import com.financial.alireza.transactions.dto.CreateTransactionRequest;
+import com.financial.alireza.transactions.dto.TransactionStatusResponse;
+import com.financial.alireza.transactions.exception.TransactionNotFoundException;
 import com.financial.alireza.transactions.model.TransactionRequestEntity;
 import com.financial.alireza.transactions.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +27,18 @@ public class RequestService {
 
         TransactionRequestEntity saved = requestRepository.save(request);
         return saved.getId();
+    }
+
+    public TransactionStatusResponse getStatus(Long id){
+        TransactionRequestEntity entity =
+                requestRepository.findById(id).orElseThrow(TransactionNotFoundException::new);
+
+        return TransactionStatusResponse
+                .builder()
+                .status(entity.getStatus())
+                .transactionNumber(entity.getTransactionNumber())
+                .failureReason(entity.getFailureReason())
+                .completeAt(entity.getCompleteAt())
+                .build();
     }
 }

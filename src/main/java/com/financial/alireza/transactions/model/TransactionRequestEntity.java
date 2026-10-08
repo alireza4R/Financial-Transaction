@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.Instant;
 
@@ -21,10 +22,14 @@ public class TransactionRequestEntity {
     private Long id;
     @Column(nullable = false)
 
-    private String trackingNumber;
     private Long amount;
     private String source;
     private String destination;
+    private String failureReason;
+
+    @UniqueElements
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long transactionNumber;
 
     Instant completeAt;
 
@@ -40,6 +45,7 @@ public class TransactionRequestEntity {
     @OneToOne
     @JoinColumn(name = "parent_id")
     private TransactionRequestEntity parentTransaction;
+
 
 
 }
