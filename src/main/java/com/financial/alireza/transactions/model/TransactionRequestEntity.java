@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Table(name = "transaction_requests")
 @Entity
 @Builder
@@ -18,9 +20,13 @@ public class TransactionRequestEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(nullable = false)
+
+    private String trackingNumber;
     private Long amount;
     private String source;
     private String destination;
+
+    Instant completeAt;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -30,6 +36,10 @@ public class TransactionRequestEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TransactionType transactionType;
+
+    @OneToOne
+    @JoinColumn(name = "parent_id")
+    private TransactionRequestEntity parentTransaction;
 
 
 }

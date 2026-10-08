@@ -3,7 +3,7 @@ package com.financial.alireza.transactions.service;
 import com.financial.alireza.accounts.repository.AccountRepository;
 import com.financial.alireza.transactions.dto.CreateTransactionRequest;
 import com.financial.alireza.transactions.model.TransactionRequestEntity;
-import com.financial.alireza.transactions.repository.TransactionRequestRepository;
+import com.financial.alireza.transactions.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RequestService {
 
-    private final TransactionRequestRepository requestRepository;
+    private final TransactionRepository requestRepository;
     private final AccountRepository accountRepository;
 
     public Long submitTransaction(CreateTransactionRequest transactionRequest){
