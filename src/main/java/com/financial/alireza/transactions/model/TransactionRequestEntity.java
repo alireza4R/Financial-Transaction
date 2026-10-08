@@ -3,15 +3,16 @@ package com.financial.alireza.transactions.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.transaction.TransactionStatus;
 
 @Table(name = "transaction_requests")
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionRequestsEntity {
+@Getter
+public class TransactionRequestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

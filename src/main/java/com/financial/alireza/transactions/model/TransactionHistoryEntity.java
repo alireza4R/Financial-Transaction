@@ -12,7 +12,7 @@ import java.time.Instant;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionHistory {
+public class TransactionHistoryEntity {
 
 
     @Id
