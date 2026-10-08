@@ -6,7 +6,7 @@ import com.financial.alireza.accounts.model.CustomerType;
 import java.time.LocalDate;
 
 public record UpdateAccountRequest( String name,
-                                    String newNationalId,
+                                    String nationalId,
                                     CustomerType customerType,
                                     String phoneNumber,
                                     String address,

@@ -3,5 +3,6 @@ package com.financial.alireza.transactions.model;
 public enum TransactionType {
     DEPOSIT,
     WITHDRAW,
-    TRANSFER
+    TRANSFER,
+    FEE
 }

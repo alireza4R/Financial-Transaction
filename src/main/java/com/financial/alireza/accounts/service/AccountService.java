@@ -51,11 +51,11 @@ public class AccountService {
     }
 
     @Transactional
-    public void changeInformation(UpdateAccountRequest updateAccountRequest, String nationalId, String userName){
+    public void changeInformation(UpdateAccountRequest updateAccountRequest, String oldNationalId, String userName){
 
-        AccountEntity accountEntity = accountRepository.findForUpdateByNationalId(nationalId)
+        AccountEntity accountEntity = accountRepository.findForUpdateByNationalId(oldNationalId)
                 .orElseThrow(()-> new UsernameNotFoundException("No account found with this National ID"));
-        accountRepository.findByNationalId(updateAccountRequest.newNationalId()).ifPresent(accountEntity1 -> {throw new AccountExistException("Your new national id already exist");});
+        accountRepository.findByNationalId(updateAccountRequest.nationalId()).ifPresent(accountEntity1 -> {throw new AccountExistException("Your new national id already exist");});
 
 
         var account = PropertyAccessorFactory
