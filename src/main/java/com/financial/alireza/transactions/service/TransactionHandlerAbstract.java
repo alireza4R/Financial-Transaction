@@ -1,10 +1,23 @@
 package com.financial.alireza.transactions.service;
 
+import com.financial.alireza.transactions.model.TransactionRequestEntity;
 import com.financial.alireza.transactions.repository.TransactionRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
+
 public abstract  class  TransactionHandlerAbstract {
-    private final TransactionRepository transactionRepository;
-    public abstract void executeTransaction();
+    protected final TransactionRepository transactionRepository;
+
+    protected TransactionHandlerAbstract(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
+
+    public void executeTransaction(TransactionRequestEntity transactionRequest){
+
+    };
+
+
 }
