@@ -42,7 +42,7 @@ public class DepositHandler extends TransactionHandlerAbstract{
     @Override
     protected void execute(TransactionRequestEntity request , LockedAccounts accounts, Long fee) {
         accounts.destination().setBalance(
-                accounts.destination().getBalance() + request.getAmount()
+                Math.addExact(accounts.destination().getBalance() , request.getAmount())
         );
 
         request.setTransactionNumber(transactionNumberGenerator.generate());

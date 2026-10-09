@@ -54,7 +54,7 @@ public class AccountService {
     public void changeInformation(UpdateAccountRequest updateAccountRequest, String oldNationalId, String userName){
 
         AccountEntity accountEntity = accountRepository.findForUpdateByNationalId(oldNationalId)
-                .orElseThrow(()-> new UsernameNotFoundException("No account found with this National ID"));
+                .orElseThrow(()-> new AccountNotFoundException("No account found with this National ID"));
         accountRepository.findByNationalId(updateAccountRequest.nationalId()).ifPresent(accountEntity1 -> {throw new AccountExistException("Your new national id already exist");});
 
 
