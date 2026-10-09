@@ -1,6 +1,7 @@
 package com.financial.alireza.transactions.controller;
 
 import com.financial.alireza.transactions.dto.CreateTransactionRequest;
+import com.financial.alireza.transactions.dto.ReportRequest;
 import com.financial.alireza.transactions.dto.TransactionStatusResponse;
 import com.financial.alireza.transactions.service.RequestService;
 import jakarta.validation.Valid;
@@ -23,6 +24,11 @@ public class TransactionController {
     public ResponseEntity<TransactionStatusResponse> getTransactionStatus(@PathVariable Long id){
 
         return ResponseEntity.ok(requestService.getStatus(id));
+
+    }
+
+    @GetMapping("transaction/report")
+    public ResponseEntity<> getReport(@Valid @RequestBody ReportRequest reportRequest){
 
     }
 }

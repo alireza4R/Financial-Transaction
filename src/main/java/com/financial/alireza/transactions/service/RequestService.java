@@ -31,7 +31,7 @@ public class RequestService {
 
     public TransactionStatusResponse getStatus(Long id){
         TransactionRequestEntity entity =
-                requestRepository.findById(id).orElseThrow(TransactionNotFoundException::new);
+                requestRepository.findById(id).orElseThrow(()-> new TransactionNotFoundException("Transaction not found"));
 
         return TransactionStatusResponse
                 .builder()
