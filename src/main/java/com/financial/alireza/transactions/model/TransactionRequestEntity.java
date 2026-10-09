@@ -25,8 +25,7 @@ public class TransactionRequestEntity {
     private String destination;
     private String failureReason;
 
-    @UniqueElements
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(unique = true)
     private Long transactionNumber;
 
     Instant completeAt;

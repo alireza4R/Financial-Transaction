@@ -23,4 +23,13 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
     @Query("select a from AccountEntity a where a.nationalId = :nationalId")
     Optional<AccountEntity> findForUpdateByNationalId(
             @Param("nationalId") String nationalId);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+    select a from AccountEntity a
+    where a.accountNumber = :number
+    """)
+    Optional<AccountEntity> findForUpdateByAccountNumber(
+            @Param("number") String number
+    );
 }

@@ -3,6 +3,7 @@ package com.financial.alireza.transactions.validation;
 import com.financial.alireza.accounts.model.AccountEntity;
 import com.financial.alireza.accounts.model.AccountStatus;
 import com.financial.alireza.accounts.repository.AccountRepository;
+import com.financial.alireza.transactions.dto.LockedAccounts;
 import com.financial.alireza.transactions.model.Status;
 import com.financial.alireza.transactions.model.TransactionRequestEntity;
 import com.financial.alireza.transactions.repository.TransactionRepository;
@@ -19,11 +20,12 @@ public class TransactionExecutionValidator {
     private final AccountRepository accountRepository;
 
     public List<String> validateTransaction (TransactionRequestEntity request,
+                                             LockedAccounts accounts,
                                              long fee){
 
-        Optional<AccountEntity> source = accountRepository.findByAccountNumber(request.getSource());
-        Optional<AccountEntity> destination = accountRepository.findByAccountNumber(request.getDestination());
-        Optional<AccountEntity> bank = accountRepository.getBankAccount();
+        AccountEntity source = accounts.source();
+        AccountEntity destination = accounts.destination();
+        AccountEntity bank = accounts.bank();
 
         List<String> errors = new ArrayList<>();
 
@@ -34,11 +36,11 @@ public class TransactionExecutionValidator {
             }
 
             case WITHDRAW -> {
-                Optional<AccountEntity> account = accountRepository.findByAccountNumber(request.getSource());
 
                 checkAccount(source, "Source", errors);
-
-                source.ifPresent(accountEntity -> checkBalance(accountEntity,request.getAmount()  , 0L, errors));
+                if (source != null) {
+                    checkBalance(source, request.getAmount(), fee, errors);
+                }
             }
 
             case TRANSFER -> {
@@ -46,8 +48,9 @@ public class TransactionExecutionValidator {
                 checkAccount(source, "Source", errors);
                 checkAccount(destination, "Destination", errors);
                 checkAccount(bank, "Bank", errors);
-
-                source.ifPresent(accountEntity -> checkBalance(accountEntity,request.getAmount()  , fee, errors));
+                if (source != null) {
+                    checkBalance(source, request.getAmount(), fee, errors);
+                }
             }
         }
 
@@ -56,16 +59,16 @@ public class TransactionExecutionValidator {
     }
 
     private void checkAccount(
-            Optional<AccountEntity> account,
+            AccountEntity account,
             String role,
             List<String> errors) {
 
-        if (account.isEmpty()) {
+        if (account == null) {
             errors.add(role + " account doesn't exist");
             return;
         }
 
-        if (account.get().getAccountStatus() != AccountStatus.ACTIVE) {
+        if (account.getAccountStatus() != AccountStatus.ACTIVE) {
             errors.add(role + " account is not active");
         }
     }
