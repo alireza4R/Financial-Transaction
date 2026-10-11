@@ -14,7 +14,15 @@ import java.time.Instant;
 public class AccountHistoryEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "accountHistoryIdGenerator",
+            sequenceName = "account_history_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "accountHistoryIdGenerator"
+    )
     private Long id;
 
     private String fieldName;

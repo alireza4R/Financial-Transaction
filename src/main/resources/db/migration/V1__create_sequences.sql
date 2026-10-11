@@ -1,0 +1,36 @@
+
+CREATE SEQUENCE accounts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE
+    CACHE 20;
+
+CREATE SEQUENCE account_history_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE
+    CACHE 20;
+
+CREATE SEQUENCE transaction_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE
+    CACHE 20;
+
+
+
+CREATE SEQUENCE card_number_seq
+    START WITH 10000
+    INCREMENT BY 1
+    MAXVALUE 99999999999999
+    NOCYCLE
+    CACHE 20;
+
+
+
+CREATE SEQUENCE transaction_number_seq
+    START WITH 10000
+    INCREMENT BY 1
+    MAXVALUE 9223372036854775807
+    NOCYCLE
+    CACHE 20;

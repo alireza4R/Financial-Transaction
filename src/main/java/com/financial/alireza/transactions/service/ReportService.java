@@ -30,9 +30,7 @@ public class ReportService {
     private final AccountRepository accountRepository;
 
     @Transactional(readOnly = true)
-    public Page<TransactionResponse> report(
-            ReportRequest filter,
-            Pageable pageable) {
+    public Page<TransactionResponse> report(ReportRequest filter, int page, int limit) {
 
         if (!accountRepository.existsByAccountNumber(filter.accountNumber())) {
             throw new AccountNotFoundException("Account not found");
@@ -42,15 +40,15 @@ public class ReportService {
                 buildSpecification(filter);
 
         Pageable effectivePageable = PageRequest.of(
-                pageable.getPageNumber(),
-                Math.min(pageable.getPageSize(), 100),
+                page,
+                Math.min(limit, 100),
                 Sort.by(
                         Sort.Order.desc("completeAt"),
                         Sort.Order.desc("id")
                 )
         );
 
-        // 4. Query the database and map the result.
+
         return transactionRepository
                 .findAll(specification, effectivePageable)
                 .map(transaction -> new TransactionResponse(
@@ -63,14 +61,13 @@ public class ReportService {
                 ));
     }
 
-    private Specification<TransactionRequestEntity> buildSpecification(
-            ReportRequest filter) {
+    private Specification<TransactionRequestEntity> buildSpecification(ReportRequest filter) {
 
         return (root, query, cb) -> {
 
             List<Predicate> conditions = new ArrayList<>();
 
-            // Only completed money movements.
+
             conditions.add(
                     cb.equal(root.get("status"), Status.SUCCESSFUL)
             );
@@ -78,23 +75,15 @@ public class ReportService {
             String accountNumber = filter.accountNumber();
             String counterparty = filter.counterpartyAccount();
 
-            Direction direction = filter.direction() == null
-                    ? Direction.ALL
-                    : filter.direction();
+            Direction direction = filter.direction() == null ? Direction.ALL : filter.direction();
 
-            // Incoming: the requested account is the destination.
-            Predicate incoming = cb.equal(
-                    root.get("destination"),
-                    accountNumber
-            );
 
-            // Outgoing: the requested account is the source.
-            Predicate outgoing = cb.equal(
-                    root.get("source"),
-                    accountNumber
-            );
+            Predicate incoming = cb.equal(root.get("destination"), accountNumber);
 
-            // Restrict the opposite side, when provided.
+
+            Predicate outgoing = cb.equal(root.get("source"), accountNumber);
+
+
             if (counterparty != null) {
                 incoming = cb.and(
                         incoming,

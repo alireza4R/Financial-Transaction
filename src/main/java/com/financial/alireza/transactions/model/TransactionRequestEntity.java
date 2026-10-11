@@ -16,7 +16,15 @@ import java.time.Instant;
 public class TransactionRequestEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "transactionIdGenerator",
+            sequenceName = "transaction_requests_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "transactionIdGenerator"
+    )
     private Long id;
     @Column(nullable = false)
 

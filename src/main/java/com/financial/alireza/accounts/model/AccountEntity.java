@@ -14,7 +14,15 @@ import java.time.LocalDate;
 @Builder
 public class AccountEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "accountIdGenerator",
+            sequenceName = "accounts_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "accountIdGenerator"
+    )
     private Long id;
 
     @Column(nullable = false, unique = true, length = 14, updatable = false)
