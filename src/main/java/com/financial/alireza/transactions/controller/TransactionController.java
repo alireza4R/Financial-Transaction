@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class TransactionController {
     }
 
     @GetMapping("transaction/report")
-    public ResponseEntity<ReportResponse> getReport(@Valid @ModelAttribute ReportRequest reportRequest,
+    public ResponseEntity<ReportResponse> getReport(@Valid @ModelAttribute @ParameterObject ReportRequest reportRequest,
                                                     @RequestParam (defaultValue = "1") @Min(1) int page,
                                                     @RequestParam(defaultValue = "20") @Min(1) @Max(100) int limit){
 

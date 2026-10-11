@@ -5,6 +5,7 @@ import com.financial.alireza.transactions.dto.CreateTransactionRequest;
 import com.financial.alireza.transactions.dto.TransactionStatusResponse;
 import com.financial.alireza.transactions.exception.TransactionNotFoundException;
 import com.financial.alireza.transactions.model.TransactionRequestEntity;
+import com.financial.alireza.transactions.model.TransactionType;
 import com.financial.alireza.transactions.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,16 @@ public class RequestService {
     public Long submitTransaction(CreateTransactionRequest transactionRequest){
         TransactionRequestEntity request =
         TransactionRequestEntity.builder()
-                        .source(transactionRequest.source())
-                                .destination(transactionRequest.destination())
+                .source(
+                        transactionRequest.transactionType() == TransactionType.DEPOSIT
+                                ? null
+                                : transactionRequest.source()
+                )
+                .destination(
+                        transactionRequest.transactionType() == TransactionType.WITHDRAW
+                                ? null
+                                : transactionRequest.destination()
+                )
                                         .amount(transactionRequest.amount())
                                                 .transactionType(transactionRequest.transactionType())
                                                         .build();

@@ -57,10 +57,16 @@ public class SecurityConfig{
                 )
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().authenticated()
-                )
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+                        .anyRequest().authenticated())
 
-                .httpBasic(Customizer.withDefaults());
+
+                        .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
