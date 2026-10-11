@@ -1,11 +1,13 @@
 package com.financial.alireza.transactions.controller;
 
-import com.financial.alireza.transactions.dto.CreateTransactionRequest;
-import com.financial.alireza.transactions.dto.ReportRequest;
-import com.financial.alireza.transactions.dto.TransactionStatusResponse;
+import com.financial.alireza.transactions.dto.*;
+import com.financial.alireza.transactions.service.ReportService;
 import com.financial.alireza.transactions.service.RequestService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class TransactionController {
 
     private final RequestService requestService;
+    private final ReportService reportService;
 
     @PostMapping("transaction/request")
     public Long requestTransaction(@Valid @RequestBody CreateTransactionRequest transactionRequest){
@@ -28,7 +31,21 @@ public class TransactionController {
     }
 
     @GetMapping("transaction/report")
-    public ResponseEntity<> getReport(@Valid @RequestBody ReportRequest reportRequest){
+    public ResponseEntity<ReportResponse> getReport(@Valid @ModelAttribute ReportRequest reportRequest,
+                                                    @RequestParam (defaultValue = "1") @Min(1) int page,
+                                                    @RequestParam(defaultValue = "20") @Min(1) @Max(100) int limit){
+
+        Page<TransactionResponse> result = reportService.report(reportRequest, page, limit);
+
+        ReportResponse response = new ReportResponse(
+                result.getContent(),
+                result.getNumber() + 1,
+                result.getSize(),
+                result.getTotalElements(),
+                result.getTotalPages()
+        );
+
+        return ResponseEntity.ok(response);
 
     }
 }

@@ -40,7 +40,7 @@ public class ReportService {
                 buildSpecification(filter);
 
         Pageable effectivePageable = PageRequest.of(
-                page,
+                page -1,
                 Math.min(limit, 100),
                 Sort.by(
                         Sort.Order.desc("completeAt"),
