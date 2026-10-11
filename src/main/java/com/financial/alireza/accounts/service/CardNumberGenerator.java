@@ -1,10 +1,12 @@
 package com.financial.alireza.accounts.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 
+@Slf4j
 @Component
 public class CardNumberGenerator {
 
@@ -23,6 +25,10 @@ public class CardNumberGenerator {
         if (value == null) {
             throw new IllegalStateException("Could not generate card number");
         }
+
+        log.info("Card Number {} has been generated",
+                String.format(Locale.ROOT, "%014d", value));
+
         return String.format(Locale.ROOT, "%014d", value);
     }
 }

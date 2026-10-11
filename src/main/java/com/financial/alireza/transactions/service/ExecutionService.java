@@ -5,8 +5,10 @@ import com.financial.alireza.transactions.model.TransactionRequestEntity;
 import com.financial.alireza.transactions.repository.TransactionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ExecutionService {
@@ -41,6 +43,12 @@ public class ExecutionService {
                 };
 
         handler.lunchTransaction(request);
+
+        log.info(
+                "Transaction handled, awaiting commit: trackingId={}, status={}",
+                request.getId(),
+                request.getStatus()
+        );
 
         return true;
     }

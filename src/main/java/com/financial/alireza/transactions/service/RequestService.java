@@ -8,8 +8,10 @@ import com.financial.alireza.transactions.model.TransactionRequestEntity;
 import com.financial.alireza.transactions.model.TransactionType;
 import com.financial.alireza.transactions.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RequestService {
@@ -35,6 +37,13 @@ public class RequestService {
                                                         .build();
 
         TransactionRequestEntity saved = requestRepository.save(request);
+
+        log.info(
+                "Transaction submitted: trackingId={}, type={}",
+                saved.getId(),
+                saved.getTransactionType()
+        );
+
         return saved.getId();
     }
 

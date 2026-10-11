@@ -12,6 +12,7 @@ import com.financial.alireza.accounts.repository.AccountHistoryRepository;
 import com.financial.alireza.accounts.repository.AccountRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountService {
@@ -47,6 +49,12 @@ public class AccountService {
                 .build();
 
         AccountEntity savedAccount = accountRepository.save(accountEntity);
+
+        log.info(
+                "Account saved: ID = {}, National ID={}",
+                savedAccount.getId(),
+                savedAccount.getNationalId()
+        );
         return savedAccount.getAccountNumber();
     }
 
@@ -85,7 +93,10 @@ public class AccountService {
                 );
             }
             accountEntity.setLastUpdate(LocalDate.now());
-            accountRepository.save(accountEntity);
+            AccountEntity updatedAccount = accountRepository.save(accountEntity);
+            log.info("Account with id = {} has been updated",
+                    updatedAccount.getId());
+
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException("Cannot read update request", e);
         }
