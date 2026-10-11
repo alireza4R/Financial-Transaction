@@ -44,7 +44,7 @@ public abstract  class  TransactionHandlerAbstract {
         executionValidator.validateTransaction(transactionRequest, accounts, fee);
 
         if(!errors.isEmpty()){
-            transactionRequest.setFailureReason(String.join("", errors));
+            transactionRequest.setFailureReason(String.join(";", errors));
             transactionRequest.setStatus(Status.FAILURE);
             transactionRequest.setCompleteAt(Instant.now());
             return;

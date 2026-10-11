@@ -29,7 +29,7 @@ public class AccountController {
     }
 
     @PatchMapping("/update/{nationalId}")
-    public void updateAccount(@RequestBody UpdateAccountRequest updateAccountRequest,
+    public void updateAccount(@RequestBody @Valid UpdateAccountRequest updateAccountRequest,
                               @NotBlank @PathVariable String nationalId,
                               Principal principal){
         accountService.changeInformation(updateAccountRequest, nationalId, principal.getName());

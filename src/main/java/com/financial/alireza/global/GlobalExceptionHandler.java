@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
@@ -63,6 +70,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                     : "Request failed";
         };
 
+        if (statusCode.value() == 400) {
+            if (ex instanceof MethodArgumentNotValidException validationException) {
+                message = validationMessage(
+                        validationException.getBindingResult().getAllErrors()
+                );
+            } else if (ex instanceof HandlerMethodValidationException validationException) {
+                message = validationMessage(
+                        validationException.getAllErrors()
+                );
+            }
+        }
+
         if (statusCode.is5xxServerError()) {
             log.error("Request processing failed", ex);
         }
@@ -93,5 +112,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity
                 .status(status)
                 .body(new ErrorResponse(message));
+    }
+
+    private String validationMessage(
+            List<? extends MessageSourceResolvable> errors
+    ) {
+        String message = errors.stream()
+                .map(error -> {
+                    if (error instanceof FieldError fieldError
+                            && fieldError.isBindingFailure()) {
+                        return "Invalid value for " + fieldError.getField();
+                    }
+
+                    String defaultMessage = error.getDefaultMessage();
+
+                    return defaultMessage == null || defaultMessage.isBlank()
+                            ? "Invalid value"
+                            : defaultMessage;
+                })
+                .distinct()
+                .collect(Collectors.joining("; "));
+
+        return message.isBlank() ? "Invalid request data" : message;
     }
 }

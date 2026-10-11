@@ -55,8 +55,13 @@ public class AccountService {
 
         AccountEntity accountEntity = accountRepository.findForUpdateByNationalId(oldNationalId)
                 .orElseThrow(()-> new AccountNotFoundException("No account found with this National ID"));
-        accountRepository.findByNationalId(updateAccountRequest.nationalId()).ifPresent(accountEntity1 -> {throw new AccountExistException("Your new national id already exist");});
 
+        if(updateAccountRequest.nationalId() != null) {
+            accountRepository.findByNationalId(updateAccountRequest.nationalId())
+                    .ifPresent(accountEntity1 -> {
+                        throw new AccountExistException("Your new national id already exist");
+                    });
+        }
 
         var account = PropertyAccessorFactory
                 .forBeanPropertyAccess(accountEntity);
