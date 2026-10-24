@@ -13,7 +13,6 @@ A REST API built with Java and Spring Boot for managing customer accounts, proce
 - Retrieve successful transactions using optional filters and database pagination.
 - Authenticate API requests with HTTP Basic and test endpoints through Swagger UI.
 
-Monetary amounts are represented as whole numbers in tomans.
 
 ## Architecture and Processing
 
@@ -91,7 +90,7 @@ app.transfer-fee.bank-account-number=00000000000001
 app.transactions.worker-delay-ms=500
 ```
 
-- `rate`: Fee multiplier; `0.001` represents `0.1%`.
+- `rate`: Fee multiplier.
 - `minimum` and `maximum`: Fee limits in tomans.
 - `bank-account-number`: Account receiving transfer fees.
 - `worker-delay-ms`: Delay between the completion of one worker execution and the next, in milliseconds. Each execution processes at most one request.
